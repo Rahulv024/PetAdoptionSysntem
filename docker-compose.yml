@@ -1,0 +1,26 @@
+version: '3.8'
+
+services:
+  server:
+    build:
+      context: "C:/Users/rahul/OneDrive/Desktop/1st Sem/PetAdoptionSystem/PetAdoptionSystem/server"
+      dockerfile: Dockerfile.server
+    ports:
+      - "50051:50051"
+    networks:
+      - grpc-network
+
+  client:
+    build:
+      context: "C:/Users/rahul/OneDrive/Desktop/1st Sem/PetAdoptionSystem/PetAdoptionSystem"
+      dockerfile: src/main/java/com/example/ds/Dockerfile.client
+    depends_on:
+      - server
+    networks:
+      - grpc-network
+    volumes:
+      - "C:/Users/rahul/OneDrive/Desktop/1st Sem/PetAdoptionSystem/PetAdoptionSystem:/app/data"
+
+networks:
+  grpc-network:
+    driver: bridge

@@ -1,0 +1,17 @@
+# Use a Python base image
+FROM python:3.13-slim
+
+# Set the working directory
+WORKDIR /app
+
+# Copy the Python server files into the container
+COPY . /app
+
+# Install the required Python packages
+RUN pip install --no-cache-dir grpcio grpcio-tools protobuf
+
+# Expose the port the server will run on
+EXPOSE 50051
+
+# Run the Python gRPC server
+CMD ["python", "server.py"]

@@ -1,0 +1,28 @@
+syntax = "proto3";
+
+package petadoption;
+
+service PetAdoption {
+  rpc RegisterPet (PetRequest) returns (PetResponse);
+  rpc SearchPet (SearchRequest) returns (SearchResponse);
+}
+
+message PetRequest {
+  string name = 1;
+  string gender = 2;
+  int32 age = 3;
+  string breed = 4;
+  bytes picture = 5;
+}
+
+message PetResponse {
+  string message = 1;
+}
+
+message SearchRequest {
+  string keyword = 1;  // Can be name, gender, age, or breed
+}
+
+message SearchResponse {
+  repeated PetRequest pets = 1;
+}

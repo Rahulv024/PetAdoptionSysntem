@@ -1,0 +1,17 @@
+# Stage 1: Build the project with Gradle and create a fat JAR
+FROM gradle:8.8-jdk17 AS build
+
+WORKDIR /app
+COPY build.gradle /app/
+COPY settings.gradle /app/
+COPY src /app/src
+RUN gradle shadowJar
+
+# Stage 2: Use Java 17 runtime to run the application
+FROM openjdk:17-slim
+
+WORKDIR /app
+COPY --from=build /app/build/libs/PetAdoptionSystem-all.jar /app/app.jar
+
+# Run the fat JAR
+CMD ["java", "-jar", "/app/app.jar"]
